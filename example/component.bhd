@@ -1,0 +1,21 @@
+implements "component.h"
+
+-- sequential design
+-- signals here compiled to s_...; ports compiled to names
+-- what if the user names a port s_...? Or uses a vhdl reserved name?
+bit[1 downto 0] my_signal, bit info rising(clock) {
+    bit variable; -- default value is 'X', as in VHDL. Perhaps '0' nicer?
+
+    variable := .signal[3] AND .signal[1];
+
+    -- ternary operator and use of bits as booleans implicitly (= '1')
+    my_signal <= .signal[0] & .signal[2] when variable else 00;
+
+    -- for comprehension
+    info <= .signal[n] XOR for n in .signal;
+}
+
+-- combinational design
+.signal {
+    .signal <= info OR (my_signal[n] OR for n in my_signal);
+}
